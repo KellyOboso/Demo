@@ -1,0 +1,28 @@
+{% extends 'starter.html' %}
+{% load static %}
+{% block body %}
+
+   <div class="container">
+    <h1>Loan Application</h1>
+    <p>We offer loans with a 12% interest rate. Use the calculator below to estimate your repayments.</p>
+
+    <form id="loanCalculator">
+        <div class="mb-3">
+            <label for="loanAmount" class="form-label">Loan Amount (Ksh)</label>
+            <input type="number" id="loanAmount" name="loanAmount" required class="form-control" placeholder="Enter loan amount">
+        </div>
+        <div class="mb-3">
+            <label for="loanTerm" class="form-label">Loan Term (Months)</label>
+            <input type="number" id="loanTerm" name="loanTerm" required class="form-control" placeholder="Enter loan term in months">
+        </div>
+        <button type="button" class="btn btn-outline-primary" onclick="calculateLoan()">Calculate Repayment</button>
+    </form>
+
+    <h3 class="mt-4">Loan Repayment Summary</h3>
+    <p id="result"></p>
+</div>
+
+
+
+
+{% endblock %}

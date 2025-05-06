@@ -1,0 +1,20 @@
+{% extends 'starter.html' %}
+{% load static %}
+{% block body %}
+
+   <h2>Its KELLY</h2>
+   <h6>if request.method=='POST':
+      if member.object.filter(
+          username = request.POST['username'],
+          password = request.POST['password'],
+      ).exists():
+          return render(request,'membersportal.html')
+      else:
+          return render(request,'login.html')
+  else:
+      return render(request,'membersportal.html')</h6>
+
+
+
+
+{% endblock %}

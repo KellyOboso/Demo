@@ -1,0 +1,111 @@
+{% extends 'starter.html' %} {% load static %} {% block body %}
+
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/styling/indexstyle.css' %}">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <center>
+            {% if messages %} {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %} {% endif %} {% if user.is_authenticated %}
+            <p>Welcome Back: {{ request.session.Title}} {{ request.session.Firstname }} {{ request.session.Lastname }}</p>
+            {% else %}
+            <p>You are not logged in. <a href="{% url 'login' %}">Login</a></p>
+            {% endif %}
+        </center>
+
+
+        <div class="card mb-4">
+            <div class="card-header">
+                Account Balance
+            </div>
+            <div class="card-body">
+                <h3 id="balance">KES {{ account.balance }}</h3>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                Member Status
+            </div>
+            <div class="card-body">
+                <p style="font-weight: bold;">Active Member</p>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                {{ request.session.Title }} {{ request.session.Firstname }}, your Transaction History:
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Type</th>
+                            <th>Amount (Ksh)</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    {% if key1 %}
+                    <tbody id="transactionTableBody">
+                        {% for i in key1 %}
+                        <tr>
+                            <td>{{ i.id }}</td>
+                            <td>{{ i.Transaction_type }}</td>
+                            <td>{{ i.Amount }}</td>
+                            <td>{{ i.Date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchDashboardData() {
+            try {
+                let response = await fetch("/api/dashboard/");
+                let data = await response.json();
+
+                // Update balance
+                document.getElementById('balance').innerText = 'KES ' + data.balance;
+
+                // Update transactions
+                let transactionBody = document.getElementById('transaction-body');
+                transactionBody.innerHTML = '';
+
+                data.transactions.forEach(transaction => {
+                    let row = document.createElement('tr');
+                    row.innerHTML = `
+                    <td>${transaction.date}</td>
+                    <td>${transaction.type}</td>
+                    <td>${transaction.amount}</td>
+                `;
+                    transactionBody.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error("Error fetching dashboard data:", error);
+            }
+        }
+
+        // Fetch data when the page loads
+        window.onload = fetchDashboardData;
+    </script>
+
+
+</body>
+
+</html>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'starter.html' %} {% load static %} {% block body %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sacco Members</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="{% static 'assets/styling/allmemberstyle.css' %}">
+</head>
+
+<body>
+
+    <h1>All Sacco Members</h1>
+
+    <div class="members-list">
+        <table id="members-table">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Open_Date</th>
+                    <th>Title</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Country</th>
+                    <th>County</th>
+                    <th>Residence</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            {% if key1 %}
+            <tbody>
+                {% for i in key1 %}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.Open_Date}}</td>
+                    <td>{{i.Title}}</td>
+                    <td>{{i.Firstname}}</td>
+                    <td>{{i.Lastname}}</td>
+                    <td>{{i.Country}}</td>
+                    <td>{{i.County}}</td>
+                    <td>{{i.Residence}}</td>
+                    <td>{{i.Mobile}}</td>
+                    <td>{{i.Email}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            {% endif %}
+        </table>
+    </div>
+
+</body>
+
+</html>
+
+
+
+{% endblock %}
