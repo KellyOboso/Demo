@@ -25,7 +25,16 @@ SECRET_KEY = 'django-insecure-1k%^48k^@@e)y7lj$3xbuo+g#0tpfh&fi(#bvu-96!yp$gq&*q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'board-ke74.onrender.com',  # Your Render domain
+    'localhost',                # For local development
+    '127.0.0.1', 
+]
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
 
 
 # Application definition
@@ -116,15 +125,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Static files (CSS, JavaScript, Images)
 # URL to use when referring to static files located in STATIC_ROOT
+# settings.py
 STATIC_URL = '/static/'
-
-# The directory where static files will be collected when you run `collectstatic`
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # This is where collectstatic will gather all static files
-
-# Additional directories to look for static files
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # Assuming you have a 'static' directory in your project root
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
